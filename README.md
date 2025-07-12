@@ -1,11 +1,10 @@
 # Real-Time Proactive Anomaly Detection via Forward and Backward Forecast Modeling
 
-We propose two standalone, proactive anomaly detection models:
+Real-time anomaly detection is critical for preventing failures in high-stakes domains like industrial automation, financial systems, and satellite telemetry. Traditional anomaly detectors are reactive—they detect anomalies only after they’ve occurred. However, in many real-world applications, what’s needed is a proactive solution: one that can anticipate anomalies before they manifest.
 
+This repository introduces two novel, real-time-capable frameworks for proactive anomaly detection:
 - **FFM (Forward Forecasting Model):** predicts future values using historical context
 - **BRM (Backward Reconstruction Model):** reconstructs past behavior using future context
-
-Anomalies are detected by scoring the discrepancy between predicted and actual sequences, enabling early identification of abnormal patterns.
 
 ## Quick Start
 
