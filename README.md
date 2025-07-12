@@ -84,7 +84,7 @@ The SMD dataset consists of server infrastructure metrics collected from 28 mach
 
 ---
 
-### 📈 PSM (Pooled Server Metrics – from eBay Inc.)
+### PSM (Pooled Server Metrics – from eBay Inc.)
 
 The PSM dataset was publicly released by eBay Inc. as part of the RANSynCoders project. It contains real server telemetry data for asynchronous anomaly detection.
 
