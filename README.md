@@ -18,7 +18,7 @@ This repository introduces two novel, real-time-capable frameworks for proactive
 bash demo.sh 
 ```
 
-Other datasets were not added to this repository and this repository only tests on the MSL dataset due to file size constraints. All other datasets are public on Kaggle.
+This repository only tests on the MSL dataset due to file size constraints. All other datasets are public on Kaggle.
 
 ## Datasets 
 
