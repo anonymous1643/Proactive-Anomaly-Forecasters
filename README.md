@@ -15,7 +15,7 @@ This repository introduces two novel, real-time-capable frameworks for proactive
 ### Clone the repository and cd into Code/ to run bash commands
 
 ```bash
-git clone https://github.com/your-username/MultiSnapshot.git
+git clone https://github.com/your-username/Proactive-Anomaly-Forecasters.git 
 cd Code/
 ```
 
