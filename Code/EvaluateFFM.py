@@ -9,7 +9,6 @@ from torch.utils.data import Dataset, DataLoader
 from sklearn.metrics import f1_score
 from sklearn.preprocessing import StandardScaler
 import random
-import torch
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from Code.ForwardForecastModel import (
