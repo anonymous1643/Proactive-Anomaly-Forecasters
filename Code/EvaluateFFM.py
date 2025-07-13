@@ -10,6 +10,8 @@ from Code.ForwardForecastModel import (
 )
 from Code.scoring_metrics import get_score_2, ano_evaluator, return_scores
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 pretrained_dir = './pretrained'
 if os.path.isdir(pretrained_dir):
     print(f"Removing entire pretrained directory: {pretrained_dir}")
