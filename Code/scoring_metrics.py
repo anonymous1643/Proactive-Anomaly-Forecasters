@@ -1,3 +1,8 @@
+# # This code is from  the research paper:
+# "Possibility for Proactive Anomaly Detection"
+# Code published at OpenReview: https://openreview.net/forum?id=w63aCqNRFp
+# The scoring metrics for this code were used for consistency and fairness.
+
 import numpy as np
 import os
 from pathlib import Path
