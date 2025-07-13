@@ -1,6 +1,8 @@
 import shutil
 import os
 import torch
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from Code.BackwardReconstructionModel import (
     model, test_loader, train_loader, labels, window_size,
     forecast_horizon, batch_size, g, TimeSeriesDataset, test_data, train_data
