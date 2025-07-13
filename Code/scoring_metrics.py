@@ -501,7 +501,7 @@ def get_score_2(test_pred_init, test_labels, train_orig, dataset, save_folder):
         print("Get pretrained ECOD model")
     else:
         print("No pretrained ECOD model : conduct ECOD model fitting")
-        ECOD_model = ECOD(contamination=0.0001)
+        ECOD_model = ECOD(contamination=0.001)
         ECOD_model= ECOD_model.fit(norm_train)
         dirname = os.path.dirname(f'./pretrained/Unsupervised_model/{dataset}/ECOD.joblib')
         Path(dirname).mkdir(parents=True, exist_ok=True)
