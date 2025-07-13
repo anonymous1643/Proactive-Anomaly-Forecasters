@@ -160,8 +160,8 @@ def collect_predicted_normals(model, loader):
     return np.vstack(preds)  # shape: [N, H, D]
 
 # --- Load Data ---
-train_df = pd.read_csv("../Data/MSL_train.csv", index_col=0)
-test_df = pd.read_csv("../Data/MSL_test.csv", index_col=0)
+train_df = pd.read_csv("Data/MSL_train.csv", index_col=0)
+test_df = pd.read_csv("Data/MSL_test.csv", index_col=0)
 
 drop_cols = [col for col in ["timestamp", "attack"] if col in train_df.columns]
 train_data = train_df.drop(columns=drop_cols, errors="ignore").values
