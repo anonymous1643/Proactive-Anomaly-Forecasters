@@ -151,9 +151,7 @@ The PSM dataset was publicly released by eBay Inc. as part of the RANSynCoders p
 
 This implementation has been tested on:
 
-- **CPU:** 11th Gen Intel Core i5 @ 2.4GHz  
+- **GPU:** NVIDIA T4 GPU
 - **RAM:** 16 GB  
 - **Operating System:** Windows 11 (64-bit)
-
----
 
