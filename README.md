@@ -10,6 +10,71 @@ This repository introduces two novel, real-time-capable frameworks for proactive
 
 ### Requirements
 
+This project requires **Python 3.8+** and **pip**.
+
+Follow the steps below to set up and run the code:
+
+---
+
+### 1. Clone the repository
+
+```
+git clone https://github.com/anonymous1643/Proactive-Anomaly-Forecasters.git
+cd Proactive-Anomaly-Forecasters
+```
+
+---
+
+### 2. Create and activate a virtual environment
+
+<details>
+<summary>Windows (Command Prompt)</summary>
+
+```
+python -m venv venv
+venv\Scripts\activate
+```
+</details>
+
+<details>
+<summary>macOS / Linux</summary>
+
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+</details>
+
+---
+
+### 3. Install dependencies
+
+<details>
+<summary>If using CPU only (Recommend GPU)</summary>
+
+```
+pip install --upgrade pip
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+pip install pandas numpy scikit-learn pyarrow
+```
+</details>
+
+<details>
+<summary>If using GPU (with CUDA)</summary>
+
+Check your CUDA version using:
+
+```
+nvcc --version
+```
+
+Then install the appropriate version. Example for CUDA 11.8:
+
+```
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install pandas numpy scikit-learn pyarrow
+```
+</details>
 - Python 3.8+
     
 ### To run on MSL dataset:
