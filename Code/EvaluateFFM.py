@@ -58,7 +58,7 @@ for model_result in results:
         f1_range, prec_range, rec_range
     ) = model_result
 
-    print(f"📊 {model_name} Scores:")
+    print(f"{model_name} Scores:")
     print(f"  Naive F1:       {f1:.4f} | Precision: {prec:.4f} | Recall: {rec:.4f}")
     print(f"  PAK-AUC F1:     {f1_pak:.4f} | Precision: {prec_pak:.4f} | Recall: {rec_pak:.4f}")
     print(f"  Composite F1:   {f1_comp:.4f} | Precision: {prec_comp:.4f} | Recall: {rec_comp:.4f}")
@@ -140,7 +140,7 @@ evaluator_perfeature = ano_evaluator(per_feature_flags, aligned_labels_real)
 scores_perfeature = return_scores(evaluator_perfeature)
 
 # --- Print Results ---
-print("\n📊 Real-World Forecast-Based Detection (Per-Feature Thresholding):")
+print("\nReal-World Forecast-Based Detection (Per-Feature Thresholding):")
 print(f"  Naive F1:       {scores_perfeature[0]:.4f} | Precision: {scores_perfeature[1]:.4f} | Recall: {scores_perfeature[2]:.4f}")
 print(f"  PAK-AUC F1:     {scores_perfeature[3]:.4f}")
 print(f"  Composite F1:   {scores_perfeature[6]:.4f}")
