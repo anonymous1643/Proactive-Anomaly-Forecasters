@@ -7,6 +7,7 @@ from sklearn.mixture import GaussianMixture
 from pyod.models.ecod import ECOD
 from joblib import dump, load
 import copy
+from pyod.models.deep_svdd import DeepSVDD
 
 from sklearn import metrics
 from sklearn.preprocessing import MinMaxScaler
@@ -420,30 +421,75 @@ def get_score_2(test_pred_init, test_labels, train_orig, dataset, save_folder):
     result_list = []
     
         ######################  GMM = norm ######################
-    # feature_num = norm_train.shape[1]
-    # if os.path.isfile(f'./pretrained/Unsupervised_model/{dataset}/gmm.joblib'):
-    #     gmm = load(f'./pretrained/Unsupervised_model/{dataset}/gmm.joblib')
-    #     print(f"Get pretrained GMM model")
-    # else:
-    #     print(f"No pretrained GMM model : conduct GMM model fitting")
-    #     gmm = GaussianMixture(n_components=feature_num, n_init=5, random_state=42)
-    #     gmm= gmm.fit(norm_train) 
-    #     dirname = os.path.dirname(f'./pretrained/Unsupervised_model/{dataset}/gmm.joblib')
-    #     Path(dirname).mkdir(parents=True, exist_ok=True)
-    #     dump(gmm, f'./pretrained/Unsupervised_model/{dataset}/gmm.joblib')
+    feature_num = norm_train.shape[1]
+    if os.path.isfile(f'./pretrained/Unsupervised_model/{dataset}/gmm.joblib'):
+        gmm = load(f'./pretrained/Unsupervised_model/{dataset}/gmm.joblib')
+        print(f"Get pretrained GMM model")
+    else:
+        print(f"No pretrained GMM model : conduct GMM model fitting")
+        gmm = GaussianMixture(n_components=feature_num, n_init=5, random_state=42)
+        gmm= gmm.fit(norm_train) 
+        dirname = os.path.dirname(f'./pretrained/Unsupervised_model/{dataset}/gmm.joblib')
+        Path(dirname).mkdir(parents=True, exist_ok=True)
+        dump(gmm, f'./pretrained/Unsupervised_model/{dataset}/gmm.joblib')
     
-    # X_score_gmm = gmm.score_samples(norm_train)
-    # Y_score_gmm = gmm.score_samples(norm_test)
-    # threshold_gmm = np.min(X_score_gmm)
-    # Y_label_gmm = Y_score_gmm < threshold_gmm
-    # Y_label_gmm = np.where(Y_label_gmm==True,1,0)
+    X_score_gmm = gmm.score_samples(norm_train)
+    Y_score_gmm = gmm.score_samples(norm_test)
+    threshold_gmm = np.min(X_score_gmm)
+    Y_label_gmm = Y_score_gmm < threshold_gmm
+    Y_label_gmm = np.where(Y_label_gmm==True,1,0)
     
-    # evaluator_gmm = ano_evaluator(Y_label_gmm, test_labels)
-    # result_f1_gmm, pre_gmm, rec_gmm, result_f1_pak_gmm, pre_pak_gmm, rec_pak_gmm, result_f1_comp_gmm, pre_comp_gmm, rec_comp_gmm,result_f1_range_gmm, pre_range_gmm, rec_range_gmm = return_scores(evaluator_gmm)
+    evaluator_gmm = ano_evaluator(Y_label_gmm, test_labels)
+    result_f1_gmm, pre_gmm, rec_gmm, result_f1_pak_gmm, pre_pak_gmm, rec_pak_gmm, result_f1_comp_gmm, pre_comp_gmm, rec_comp_gmm,result_f1_range_gmm, pre_range_gmm, rec_range_gmm = return_scores(evaluator_gmm)
     
-    # result_list.append(["gmm", result_f1_gmm, pre_gmm, rec_gmm, result_f1_pak_gmm, pre_pak_gmm, rec_pak_gmm
-    #                     ,result_f1_comp_gmm, pre_comp_gmm, rec_comp_gmm, result_f1_range_gmm, pre_range_gmm, rec_range_gmm])
+    result_list.append(["gmm", result_f1_gmm, pre_gmm, rec_gmm, result_f1_pak_gmm, pre_pak_gmm, rec_pak_gmm
+                        ,result_f1_comp_gmm, pre_comp_gmm, rec_comp_gmm, result_f1_range_gmm, pre_range_gmm, rec_range_gmm])
+
+    ######################  DeepSVDD ######################
+    # Check if pretrained DeepSVDD model exists
+    model_path = f'./pretrained/Unsupervised_model/{dataset}/DeepSVDD.joblib'
+    if os.path.isfile(model_path):
+        DeepSVDD_model = load(model_path)
+        print("Loaded pretrained DeepSVDD model")
+    else:
+        print("No pretrained DeepSVDD model: fitting DeepSVDD model")
+        DeepSVDD_model = DeepSVDD(
+            n_features=norm_train.shape[1],  # dynamically determine number of features
+            contamination=0.05,
+            epochs=10,
+            verbose=1
+        )
+        DeepSVDD_model.fit(norm_train)
+        # Ensure directory exists
+        dirname = os.path.dirname(model_path)
+        Path(dirname).mkdir(parents=True, exist_ok=True)
+        dump(DeepSVDD_model, model_path)
     
+    # Compute anomaly scores
+    X_score_DeepSVDD = DeepSVDD_model.decision_function(norm_train)
+    Y_score_DeepSVDD = DeepSVDD_model.decision_function(norm_test)
+
+    # Threshold and prediction
+    threshold_DeepSVDD = np.max(X_score_DeepSVDD)
+    Y_label_DeepSVDD = DeepSVDD_model.predict(norm_test)
+    
+    # Evaluate predictions
+    evaluator_DeepSVDD = ano_evaluator(Y_label_DeepSVDD, test_labels)
+    (
+        result_f1_DeepSVDD, pre_DeepSVDD, rec_DeepSVDD,
+        result_f1_pak_DeepSVDD, pre_pak_DeepSVDD, rec_pak_DeepSVDD,
+        result_f1_comp_DeepSVDD, pre_comp_DeepSVDD, rec_comp_DeepSVDD,
+        result_f1_range_DeepSVDD, pre_range_DeepSVDD, rec_range_DeepSVDD
+    ) = return_scores(evaluator_DeepSVDD)
+    
+    # Append results
+    result_list.append([
+        "DeepSVDD",
+        result_f1_DeepSVDD, pre_DeepSVDD, rec_DeepSVDD,
+        result_f1_pak_DeepSVDD, pre_pak_DeepSVDD, rec_pak_DeepSVDD,
+        result_f1_comp_DeepSVDD, pre_comp_DeepSVDD, rec_comp_DeepSVDD,
+        result_f1_range_DeepSVDD, pre_range_DeepSVDD, rec_range_DeepSVDD
+    ])
     ######################  ECOD = norm ######################
     if os.path.isfile(f'./pretrained/Unsupervised_model/{dataset}/ECOD.joblib'):
         ECOD_model = load(f'./pretrained/Unsupervised_model/{dataset}/ECOD.joblib')
