@@ -183,6 +183,7 @@ for i in range(train_data.shape[1]):
 
 discrete_indices = np.array(discrete_indices)
 continuous_indices = np.array(continuous_indices)
+
 scaler = StandardScaler()
 train_data = scaler.fit_transform(train_data)
 test_data = scaler.transform(test_data)
