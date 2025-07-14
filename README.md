@@ -143,7 +143,6 @@ The PSM dataset was publicly released by eBay Inc. as part of the RANSynCoders p
 #### Source 
 - Authors: *Abdulaal et al., eBay Inc.*
 - GitHub: [https://github.com/eBay/RANSynCoders](https://github.com/eBay/RANSynCoders)
-- Kaggle: [PSM Dataset on Kaggle](https://www.kaggle.com/datasets/ljolm08/pooled-server-metrics-psm)
 
 ---
 
