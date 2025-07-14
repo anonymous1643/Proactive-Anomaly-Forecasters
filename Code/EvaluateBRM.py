@@ -34,6 +34,18 @@ def collect_predicted_normals(model, loader):
             pred, _ = model(x)
             preds.append(pred.cpu().numpy())
     return np.vstack(preds)  # shape: [N, H, D]
+
+def collect_preds_and_targets(model, loader):
+    model.eval()
+    preds = []
+    targets = []
+    with torch.no_grad():
+        for x, y in loader:
+            x = x.to(device)
+            pred, _ = model(x)
+            preds.append(pred.cpu().numpy())
+            targets.append(y.numpy())
+    return np.vstack(preds), np.vstack(targets)
     
 # --- Predict future values for test ---
 test_pred_raw = collect_predicted_normals(model, test_loader)
